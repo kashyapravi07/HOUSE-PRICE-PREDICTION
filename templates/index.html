@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('static/background.jpg'); /* Path to your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px; /* Increased padding for more space */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slightly larger shadow */
+            display: inline-block;
+            text-align: left;
+            width: 400px; /* Increased width for larger box */
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px; /* Adjusted margin for labels */
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px); /* Adjusted width to account for padding */
+            padding: 12px; /* Increased padding inside input fields */
+            margin: 5px 0 15px; /* Increased margin between fields */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fafafa; /* Light background color */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus */
+        }
+        input[type="text"]:focus {
+            border-color: #4CAF50; /* Green border on focus */
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3); /* Green shadow on focus */
+            outline: none; /* Remove default outline */
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px; /* Increased padding for submit button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px; /* Larger font size */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px; /* Increased margin above result */
+            font-size: 1.5em;
+            color: #333;
+            font-weight: bold; /* Bold text for emphasis */
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const bedroom = document.getElementById('BedroomAbvGr').value;
+            const bathroom = document.getElementById('FullBath').value;
+            const age = document.getElementById('HouseAge').value;
+            const street = document.getElementById('Street').value;
+            const neighborhood = document.getElementById('Neighborhood').value;
+            const condition = document.getElementById('Condition1').value;
+
+            if (!bedroom || !bathroom || !age || !street || !neighborhood || !condition) {
+                alert('All fields must be filled out');
+                return false;
+            }
+            if (isNaN(bedroom) || isNaN(bathroom) || isNaN(age)) {
+                alert('Please enter valid numbers for Bedrooms, Bathrooms, and House Age');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>House Price Prediction</h1>
+    <form action="/predict" method="post" onsubmit="return validateForm()">
+        <label for="BedroomAbvGr">Bedrooms:</label>
+        <input type="text" id="BedroomAbvGr" name="BedroomAbvGr"><br>
+        <label for="FullBath">Bathrooms:</label>
+        <input type="text" id="FullBath" name="FullBath"><br>
+        <label for="HouseAge">House Age:</label>
+        <input type="text" id="HouseAge" name="HouseAge"><br>
+        <label for="Street">Street:</label>
+        <input type="text" id="Street" name="Street"><br>
+        <label for="Neighborhood">Neighborhood:</label>
+        <input type="text" id="Neighborhood" name="Neighborhood"><br>
+        <label for="Condition1">Condition:</label>
+        <input type="text" id="Condition1" name="Condition1"><br>
+        <input type="submit" value="Predict Price">
+    </form>
+    <div class="result">
+        {{ prediction_text }}
+    </div>
+</body>
+</html>
